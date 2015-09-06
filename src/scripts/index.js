@@ -5,7 +5,7 @@ import {chan, go, take, offer, put} from 'js-csp';
 import * as Data from './data';
 import {requestRender} from './render';
 
-let {toClj} = Mori;
+let {toClj, get} = Mori;
 
 const loadApp = () => ({
   state: Data.fresh(),
@@ -26,11 +26,15 @@ const loadApp = () => ({
 });
 
 const initHistory = app => {
+  // hash changes => nav channel
   window.addEventListener('hashchange', () => {
     const screen = window.location.hash.slice(2);
-    go(function* () {
-      return yield put(app.channels.nav, screen);
-    });
+    const current = get(app.state, 'screen');
+    if (screen !== current) {
+      go(function* () {
+        return yield put(app.channels.nav, screen);
+      });
+    }
   });
 }
 

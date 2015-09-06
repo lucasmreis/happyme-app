@@ -1,10 +1,24 @@
 import React from 'react';
 import Mori from 'mori';
 
+import Read from './read';
+import Edit from './edit';
+import Home from './home';
+
+let {get} = Mori;
+
 const str = m => JSON.stringify(Mori.toJs(m), null, '  ');
 
 export default class Main extends React.Component {
   render() {
-    return <pre>{str(this.props.appState)}</pre>;
+    const state = this.props.appState;
+    const screen = get(state, 'screen');
+    if (screen === 'read') {
+      return <Read appState={state} channels={this.props.channels} />
+    } else if (screen === 'edit') {
+      return <Edit appState={state} channels={this.props.channels} />
+    } else {
+      return <Home appState={state} channels={this.props.channels} />
+    }
   }
 }
