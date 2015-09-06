@@ -57,6 +57,8 @@ window.testIt = () => {
     for (i = 0; i < 200; i++) {
       yield put(app.channels.add, 'uuuuu');
     }
-    yield put(app.channels.remove, {});
   });
 }
+
+window.offer = offer;
+window.Mori = Mori;

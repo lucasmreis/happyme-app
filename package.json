@@ -7,7 +7,7 @@
     "start": "parallelshell 'npm run serve' 'npm run livereload' 'npm run build:watch'",
     "serve": "cd www && httpserver -p 3010",
     "livereload": "live-reload www/ --port 3333 --interval 200",
-    "test": "mocha --recursive --compilers js:babel/register --reporter spec",
+    "test": "mocha -w --recursive --compilers js:babel/register --reporter spec",
     "build": "npm run js && npm run css && npm run html && npm run assets",
     "build:watch": "parallelshell 'npm run js:watch' 'npm run css:watch' 'npm run html:watch' 'npm run assets:watch'",
     "js": "browserify --debug src/scripts/index.js -t babelify --outfile www/app.js",

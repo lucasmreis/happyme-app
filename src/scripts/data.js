@@ -1,11 +1,22 @@
 import Mori from 'mori';
 
-let {toClj, assoc, updateIn, conj} = Mori;
+import {nextIndex, previousIndex} from './util';
 
-export const goTo = (state, route) =>
-  assoc(state, 'screen', route);
+let {toClj, assoc, updateIn, curry, conj, get} = Mori;
 
-export const view = (state, which) => state;
+export const goTo = (state, route) => {
+  const newScreenState = assoc(state, 'screen', route);
+  return assoc(newScreenState, 'currentSentence', 0);
+};
+
+export const view = (state, which) => {
+  const sentences = get(state, 'sentences');
+  const current = get(state, 'currentSentence');
+  const next = which === 'next' ?
+    nextIndex(sentences, current) :
+    previousIndex(sentences, current);
+  return assoc(state, 'currentSentence', next);
+};
 
 const newSentence = text => toClj({
   id: 1,
@@ -22,6 +33,7 @@ export const edit = (state, {id, text}) => state;
 
 export const fresh = () => Mori.toClj({
   screen: 'home',
+  currentSentence: 0,
   sentences: [
     {id: 123, text: 'one sentence'},
     {id: 456, text: 'another sentence'},
