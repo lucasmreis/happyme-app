@@ -25,6 +25,15 @@ const loadApp = () => ({
   }
 });
 
+const initHistory = app => {
+  window.addEventListener('hashchange', () => {
+    const screen = window.location.hash.slice(2);
+    go(function* () {
+      return yield put(app.channels.nav, screen);
+    });
+  });
+}
+
 const initUpdates = app => {
   Object.keys(app.consumers).forEach(k => {
     const updateFn = app.consumers[k];
@@ -43,22 +52,12 @@ const initUpdates = app => {
 const start = () => {
   let app = loadApp();
   window.app = app; // for testing
+  initHistory(app);
   initUpdates(app);
   requestRender(app);
 };
 
 start();
-
-window.testIt = () => {
-  let app = window.app;
-  go(function* () {
-    let i = 0;
-    yield put(app.channels.remove, {});
-    for (i = 0; i < 200; i++) {
-      yield put(app.channels.add, 'uuuuu');
-    }
-  });
-}
 
 window.offer = offer;
 window.Mori = Mori;

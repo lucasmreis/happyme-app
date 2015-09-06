@@ -1,8 +1,9 @@
 import Mori from 'mori';
+import Uuid from 'node-uuid';
 
 import {nextIndex, previousIndex} from './util';
 
-let {toClj, assoc, updateIn, curry, conj, get} = Mori;
+let {toClj, list, assoc, updateIn, curry, conj, get, map} = Mori;
 
 export const goTo = (state, route) => {
   const newScreenState = assoc(state, 'screen', route);
@@ -19,7 +20,7 @@ export const view = (state, which) => {
 };
 
 const newSentence = text => toClj({
-  id: 1,
+  id: Uuid.v4(),
   text: text
 });
 
@@ -27,16 +28,19 @@ export const add = (state, text) =>
   updateIn(state, ['sentences'], s => conj(s, newSentence(text)));
 
 export const remove = (state, id) =>
-  assoc(state, 'sentences', toClj([]));
+  updateIn(state, ['sentences'], s => Mori.remove(x => get(x, 'id') === id, s));
 
-export const edit = (state, {id, text}) => state;
+const changeTextIf = (id, text) => s =>
+  get(s, 'id') === id ? toClj({id, text}) : s;
 
-export const fresh = () => Mori.toClj({
+export const edit = (state, {id, text}) =>
+  updateIn(state, ['sentences'], s => map(changeTextIf(id, text), s));
+
+export const fresh = () => toClj({
   screen: 'home',
   currentSentence: 0,
-  sentences: [
+  sentences: list(
     {id: 123, text: 'one sentence'},
     {id: 456, text: 'another sentence'},
-    {id: 789, text: 'last sentence'}
-  ]
+    {id: 789, text: 'last sentence'})
 });

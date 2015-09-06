@@ -1,8 +1,8 @@
 import Mori from 'mori';
 
-import {goTo, view} from '../../src/scripts/data';
+import {goTo, view, remove, edit} from '../../src/scripts/data';
 
-let {toClj, get} = Mori;
+let {toClj, get, count, nth} = Mori;
 
 describe('data', () => {
   it('goTo', () => {
@@ -37,5 +37,42 @@ describe('data', () => {
     const newState = view(state, 'previous');
 
     expect(get(newState, 'currentSentence')).to.equal(2);
+  });
+
+  it('remove', () => {
+    const state = toClj({
+      sentences: [
+        {id: 'abc', text: 'first'},
+        {id: 'def', text: 'second'}
+      ]
+    });
+
+    const newState = remove(state, 'abc');
+    const newSentences = get(newState, 'sentences');
+    const firstSentence = nth(newSentences, 0);
+
+    expect(count(newSentences)).to.equal(1);
+    expect(get(firstSentence, 'id')).to.equal('def');
+    expect(get(firstSentence, 'text')).to.equal('second');
+  });
+
+  it('edit', () => {
+    const state = toClj({
+      sentences: [
+        {id: 'abc', text: 'first'},
+        {id: 'def', text: 'second'}
+      ]
+    });
+
+    const newState = edit(state, {id: 'def', text: 'new text'});
+    const newSentences = get(newState, 'sentences');
+    const firstSentence = nth(newSentences, 0);
+    const secondSentence = nth(newSentences, 1);
+
+    expect(count(newSentences)).to.equal(2);
+    expect(get(firstSentence, 'id')).to.equal('abc');
+    expect(get(firstSentence, 'text')).to.equal('first');
+    expect(get(secondSentence, 'id')).to.equal('def');
+    expect(get(secondSentence, 'text')).to.equal('new text');
   });
 });

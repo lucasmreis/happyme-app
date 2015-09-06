@@ -47,6 +47,7 @@
   "dependencies": {
     "js-csp": "^0.5.0",
     "mori": "^0.3.2",
+    "node-uuid": "^1.4.3",
     "react": "^0.13.3"
   }
 }
