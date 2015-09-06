@@ -1,0 +1,52 @@
+{
+  "name": "happyme",
+  "version": "1.0.0",
+  "description": "Let your happy self cheer up your sad self!",
+  "main": "",
+  "scripts": {
+    "start": "parallelshell 'npm run serve' 'npm run livereload' 'npm run build:watch'",
+    "serve": "cd www && httpserver -p 3010",
+    "livereload": "live-reload www/ --port 3333 --interval 200",
+    "test": "mocha --recursive --compilers js:babel/register --reporter spec",
+    "build": "npm run js && npm run css && npm run html && npm run assets",
+    "build:watch": "parallelshell 'npm run js:watch' 'npm run css:watch' 'npm run html:watch' 'npm run assets:watch'",
+    "js": "browserify --debug src/scripts/index.js -t babelify --outfile www/app.js",
+    "js:watch": "watchify --debug src/scripts/index.js -t babelify --outfile www/app.js -v",
+    "html": "cp src/index.html www/",
+    "html:watch": "onchange 'src/*.html' -v -- npm run html",
+    "assets": "cp -R src/assets/ www/assets/",
+    "assets:watch": "onchange 'src/assets/*.*' -v -- npm run assets",
+    "css": "node-sass src/styles/ -o www/",
+    "css:watch": "node-sass -w src/styles/ -o www/",
+    "deploy": "git subtree push --prefix www origin gh-pages",
+    "c": "babel-node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasmreis/happyme.git"
+  },
+  "author": "Lucas Reis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucasmreis/happyme/issues"
+  },
+  "homepage": "https://github.com/lucasmreis/happyme#readme",
+  "devDependencies": {
+    "babel": "^5.8.20",
+    "babel-eslint": "^4.0.5",
+    "babelify": "^6.1.3",
+    "browserify": "^11.0.1",
+    "chai": "^3.2.0",
+    "httpserver": "^0.2.0",
+    "mocha": "^2.2.5",
+    "node-sass": "^3.2.0",
+    "onchange": "^2.0.0",
+    "parallelshell": "^2.0.0",
+    "watchify": "^3.3.1"
+  },
+  "dependencies": {
+    "js-csp": "^0.5.0",
+    "mori": "^0.3.2",
+    "react": "^0.13.3"
+  }
+}
