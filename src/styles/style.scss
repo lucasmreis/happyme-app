@@ -72,3 +72,15 @@ $happyme-white: white;
 .btn-not-happy {
   background-color: $happyme-blue;
 }
+
+.read-container {
+  font-style: italic;
+  background-color: $happyme-blue;
+}
+
+.happy-sentence {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  @include transform(translate(-50%, -50%));
+}
