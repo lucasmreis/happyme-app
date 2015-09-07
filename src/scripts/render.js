@@ -2,6 +2,8 @@ import React from 'react';
 
 import Main from './components/main';
 
+React.initializeTouchEvents(true);
+
 let element = document.getElementById('happyme');
 
 let isPending = false;

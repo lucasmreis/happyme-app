@@ -31,10 +31,16 @@ export const remove = (state, id) =>
   updateIn(state, ['sentences'], s => Mori.remove(x => get(x, 'id') === id, s));
 
 const changeTextIf = (id, text) => s =>
-  get(s, 'id') === id ? toClj({id, text}) : s;
+  get(s, 'id') === id ? toClj({id, text, editing: false}) : s;
 
 export const edit = (state, {id, text}) =>
   updateIn(state, ['sentences'], s => map(changeTextIf(id, text), s));
+
+const setToEditingIf = id => s =>
+  get(s, 'id') === id ? assoc(s, 'editing', true) : s;
+
+export const startEditing = (state, id) =>
+  updateIn(state, ['sentences'], s => map(setToEditingIf(id), s));
 
 export const fresh = () => toClj({
   screen: 'home',

@@ -14,6 +14,7 @@ const loadApp = () => ({
     view: chan(),
     add: chan(),
     remove: chan(),
+    startEditing: chan(),
     edit: chan(),
   },
   consumers: {
@@ -21,6 +22,7 @@ const loadApp = () => ({
     view: Data.view,
     add: Data.add,
     remove: Data.remove,
+    startEditing: Data.startEditing,
     edit: Data.edit,
   }
 });

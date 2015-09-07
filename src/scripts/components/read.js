@@ -1,9 +1,8 @@
 import React from 'react';
 import Mori from 'mori';
+import {go, put} from 'js-csp';
 
 let {get, nth} = Mori;
-
-const str = m => JSON.stringify(Mori.toJs(m), null, '  ');
 
 export default class Read extends React.Component {
   current() {
@@ -14,9 +13,16 @@ export default class Read extends React.Component {
     return get(currentSentence, 'text');
   }
 
+  view(which) {
+    const ch = this.props.channels.view;
+    return () => go(function* () {
+      return yield put(ch, which);
+    });
+  }
+
   render() {
     window.location.hash = '/read';
-    return <div className="container read-container">
+    return <div className="container read-container" onTouchTap={this.view('next')}>
       <div className="happy-sentence">{this.current()}</div>
     </div>;
   }

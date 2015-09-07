@@ -7,8 +7,6 @@ import Home from './home';
 
 let {get} = Mori;
 
-const str = m => JSON.stringify(Mori.toJs(m), null, '  ');
-
 export default class Main extends React.Component {
   render() {
     const state = this.props.appState;

@@ -48,6 +48,8 @@
     "js-csp": "^0.5.0",
     "mori": "^0.3.2",
     "node-uuid": "^1.4.3",
-    "react": "^0.13.3"
+    "react": "^0.13.3",
+    "react-swipeable": "^3.0.2",
+    "react-tap-event-plugin": "^0.1.7"
   }
 }

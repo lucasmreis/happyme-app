@@ -43,3 +43,31 @@
   -ms-transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%); }
+
+.edit-container {
+  background-color: #990033; }
+
+.single-sentence {
+  padding: 20px;
+  border-bottom: 1px solid white;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden; }
+
+.editing-sentence {
+  position: relative;
+  height: 5em; }
+
+.textarea-sentence {
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-size: 1em;
+  width: 100%;
+  border: 0px;
+  padding: 10px 20px; }
