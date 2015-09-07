@@ -24,8 +24,13 @@ const newSentence = text => toClj({
   text: text
 });
 
-export const add = (state, text) =>
-  updateIn(state, ['sentences'], s => conj(s, newSentence(text)));
+export const startAdding = (state, bool) =>
+  assoc(state, 'adding', bool);
+
+export const add = (state, text) => {
+  const notAdding = startAdding(state, false);
+  return updateIn(notAdding, ['sentences'], s => conj(s, newSentence(text)));
+};
 
 export const remove = (state, id) =>
   updateIn(state, ['sentences'], s => Mori.remove(x => get(x, 'id') === id, s));
@@ -48,5 +53,6 @@ export const fresh = () => toClj({
   sentences: list(
     {id: 123, text: 'one sentence'},
     {id: 456, text: 'another sentence'},
-    {id: 789, text: 'last sentence'})
+    {id: 789, text: 'last sentence'}),
+  adding: false
 });

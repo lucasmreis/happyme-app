@@ -12,6 +12,7 @@ const loadApp = () => ({
   channels: {
     nav: chan(),
     view: chan(),
+    startAdding: chan(),
     add: chan(),
     remove: chan(),
     startEditing: chan(),
@@ -20,6 +21,7 @@ const loadApp = () => ({
   consumers: {
     nav: Data.goTo,
     view: Data.view,
+    startAdding: Data.startAdding,
     add: Data.add,
     remove: Data.remove,
     startEditing: Data.startEditing,

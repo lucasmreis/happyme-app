@@ -17,11 +17,17 @@ export default class EditEditingSingle extends React.Component {
   detectEnter(id) {
     return (ev) => {
       const ENTER = 13;
-      const ch = this.props.channels.edit;
+      const chRemove = this.props.channels.remove;
+      const chEdit = this.props.channels.edit;
+
       if (ev.keyCode === ENTER) {
         const text = this.state.inputText.trim();
         go(function* () {
-          return yield put(ch, {id, text});
+          if (text === '') {
+            return yield put(chRemove, id);
+          } else {
+            return yield put(chEdit, {id, text});
+          }
         });
       }
     }
