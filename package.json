@@ -5,7 +5,7 @@
   "main": "",
   "scripts": {
     "start": "parallelshell 'npm run serve' 'npm run livereload' 'npm run build:watch'",
-    "serve": "cd www && httpserver -p 3010",
+    "serve": "http-server ./www -p 3010",
     "livereload": "live-reload www/ --port 3333 --interval 200",
     "test": "mocha -w --recursive --compilers js:babel/register --reporter spec",
     "build": "npm run js && npm run css && npm run html && npm run assets",
@@ -37,7 +37,7 @@
     "babelify": "^6.1.3",
     "browserify": "^11.0.1",
     "chai": "^3.2.0",
-    "httpserver": "^0.2.0",
+    "http-server": "^0.2.0",
     "mocha": "^2.2.5",
     "node-sass": "^3.2.0",
     "onchange": "^2.0.0",
