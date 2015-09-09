@@ -69,7 +69,6 @@ const initRender = (app, element) => {
       const finishRender = chan();
       window.finishRender = finishRender;
       React.render(
-      //window.requestAnimationFrame(() => React.render(
         <Main appState={app.state} channels={app.channels} />,
         element,
         () => window.requestAnimationFrame(() => putAsync(finishRender, {})));
