@@ -67,7 +67,6 @@ const initRender = (app, element) => {
     while(true) {
       const state = yield take(app.renderCh);
       const finishRender = chan();
-      window.finishRender = finishRender;
       React.render(
         <Main appState={app.state} channels={app.channels} />,
         element,
